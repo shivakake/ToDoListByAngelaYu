@@ -9,23 +9,31 @@ import UIKit
 
 class ToDoListViewController: UITableViewController{
     
-    let namesArray = ["Shiva", "Kumar", "PGK"]
+    var itemsListArray = ["Shiva", "Kumar", "PGK"]
+    let defaults = UserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let items = defaults.array(forKey: "ToDoListArray") as? [String] {
+            itemsListArray = items		
+        }
     }
+    
     @IBAction func addNewListButtonTapped(_ sender: UIBarButtonItem) {
         
-        var text = ""
+        var itemTextField = UITextField()
         
-        let alertController = UIAlertController(title: "ToDoList", message: "Add New List", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
-            print("Success: ", text)
+        let alertController = UIAlertController(title: "To Do List", message: "Add New List Below", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add Item", style: .default) { [weak self] (action) in
+            guard let textString = itemTextField.text else { return }
+            self?.itemsListArray.append(textString)
+            self?.defaults.set(self?.itemsListArray, forKey: "ToDoListArray")
+            self?.tableView.reloadData()
         }
         
         alertController.addTextField { (textFeild) in
             textFeild.placeholder = "Enter List Here"
-            text = textFeild.text ?? ""
+            itemTextField = textFeild
         }
         alertController.addAction(action)
         present(alertController, animated: true, completion: nil)
@@ -38,12 +46,12 @@ extension ToDoListViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return namesArray.count
+        return itemsListArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
-        cell.textLabel?.text = namesArray[indexPath.row]
+        cell.textLabel?.text = itemsListArray[indexPath.row]
         return cell
     }
     
