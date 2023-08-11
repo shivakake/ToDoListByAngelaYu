@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA59779E2A8694F900F4B84C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA59779D2A8694F900F4B84C /* Item.swift */; };
 		EA8E9C022A8647C1008362E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E9C012A8647C1008362E2 /* AppDelegate.swift */; };
 		EA8E9C042A8647C1008362E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E9C032A8647C1008362E2 /* SceneDelegate.swift */; };
 		EA8E9C062A8647C1008362E2 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E9C052A8647C1008362E2 /* ToDoListViewController.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EA59779D2A8694F900F4B84C /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		EA8E9BFE2A8647C1008362E2 /* TodoListByAngelaYu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoListByAngelaYu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA8E9C012A8647C1008362E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA8E9C032A8647C1008362E2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 			children = (
 				EA8E9C012A8647C1008362E2 /* AppDelegate.swift */,
 				EA8E9C032A8647C1008362E2 /* SceneDelegate.swift */,
+				EA59779D2A8694F900F4B84C /* Item.swift */,
 				EA8E9C052A8647C1008362E2 /* ToDoListViewController.swift */,
 				EA8E9C072A8647C1008362E2 /* Main.storyboard */,
 				EA8E9C0A2A8647CD008362E2 /* Assets.xcassets */,
@@ -258,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA59779E2A8694F900F4B84C /* Item.swift in Sources */,
 				EA8E9C062A8647C1008362E2 /* ToDoListViewController.swift in Sources */,
 				EA8E9C022A8647C1008362E2 /* AppDelegate.swift in Sources */,
 				EA8E9C042A8647C1008362E2 /* SceneDelegate.swift in Sources */,
