@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Item {
+class Item: Codable { //Encodable, Decodable {
     var title: String?
     var isSelected: Bool = false
     

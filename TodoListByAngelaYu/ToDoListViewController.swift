@@ -10,14 +10,16 @@ import UIKit
 class ToDoListViewController: UITableViewController{
     
     //    var itemsListArray = ["Shiva", "Kumar", "PGK"]
-    var itemsListArray = [Item]()
-    let defaults = UserDefaults()
+    //    let defaults = UserDefaults()
     //    let defaults = UserDefaults.standard
+    
+    var itemsListArray = [Item]()
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathExtension("Items.plist")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        getData()
+        loadItems()
+//        getData()
         //        if let items = defaults.array(forKey: "ToDoListArray") as? [Item] {
         //            itemsListArray = items
         //        }
@@ -30,24 +32,6 @@ class ToDoListViewController: UITableViewController{
         itemsListArray.append(item1)
         let item2 = Item(title: "PGK")
         itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
-        itemsListArray.append(item2)
     }
     
     @IBAction func addNewListButtonTapped(_ sender: UIBarButtonItem) {
@@ -59,8 +43,8 @@ class ToDoListViewController: UITableViewController{
             guard let textString = itemTextField.text else { return }
             let item = Item(title: textString)
             self?.itemsListArray.append(item)
-            self?.defaults.set(self?.itemsListArray, forKey: "ToDoListArray")
-            self?.tableView.reloadData()
+            self?.saveItem()
+            //            self?.defaults.set(self?.itemsListArray, forKey: "ToDoListArray")
         }
         
         alertController.addTextField { (textFeild) in
@@ -69,6 +53,30 @@ class ToDoListViewController: UITableViewController{
         }
         alertController.addAction(action)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    func saveItem() {
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(itemsListArray)
+            try data.write(to: (dataFilePath)!)
+        } catch{
+            print("Error\(error)")
+        }
+        self.tableView.reloadData()
+    }
+    
+    func loadItems() {
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do {
+                itemsListArray = try decoder.decode([Item].self, from: data)
+            } catch {
+                print("Error \(error)")
+            }
+        }
+        
+        
     }
 }
 
@@ -86,12 +94,12 @@ extension ToDoListViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
         cell.textLabel?.text = itemsListArray[indexPath.row].title
         
-//        if itemsListArray[indexPath.row].isSelected == true {
-//            cell.accessoryType = .checkmark
-//        } else {
-//            cell.accessoryType = .none
-//        }
-//        cell.accessoryType = itemsListArray[indexPath.row].isSelected == true ? .checkmark : .none
+        //        if itemsListArray[indexPath.row].isSelected == true {
+        //            cell.accessoryType = .checkmark
+        //        } else {
+        //            cell.accessoryType = .none
+        //        }
+        //        cell.accessoryType = itemsListArray[indexPath.row].isSelected == true ? .checkmark : .none
         cell.accessoryType = itemsListArray[indexPath.row].isSelected ? .checkmark : .none
         return cell
     }
@@ -101,7 +109,6 @@ extension ToDoListViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        print(namesArray[indexPath.row])
         //        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
         //            tableView.cellForRow(at: indexPath)?.accessoryType = .none
         //        } else {
@@ -113,7 +120,8 @@ extension ToDoListViewController {
         //            itemsListArray[indexPath.row].isSelected = false
         //        }
         itemsListArray[indexPath.row].isSelected = !itemsListArray[indexPath.row].isSelected
-        tableView.reloadData()
+        //        tableView.reloadData()
+        saveItem()
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
